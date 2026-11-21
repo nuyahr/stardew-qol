@@ -19,6 +19,26 @@
 
 *Stardew QOL tries its best to match your pace.*
 
+> **Note:** This release is designed for **singleplayer**. A separate multiplayer version is being worked on.
+>
+> **Nexus Mods Page:** https://www.nexusmods.com/stardewvalley/mods/55821
+
+---
+
+## Gallery
+
+<div align="center">
+
+<img src="https://staticdelivery.nexusmods.com/mods/1303/images/55821/55821-1795293024-2132086183.png" alt="Stardew QOL Screenshot 1" width="48%" />
+<img src="https://staticdelivery.nexusmods.com/mods/1303/images/55821/55821-1795293023-257754216.png" alt="Stardew QOL Screenshot 2" width="48%" />
+
+<img src="https://staticdelivery.nexusmods.com/mods/1303/images/55821/55821-1795293026-1293027857.png" alt="Stardew QOL Screenshot 3" width="48%" />
+<img src="https://staticdelivery.nexusmods.com/mods/1303/images/55821/55821-1795293029-102987308.png" alt="Stardew QOL Screenshot 4" width="48%" />
+
+<img src="https://staticdelivery.nexusmods.com/mods/1303/images/55821/55821-1795293056-1084042074.png" alt="Stardew QOL Screenshot 5" width="48%" />
+
+</div>
+
 ---
 
 ## Main Features
