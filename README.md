@@ -68,3 +68,17 @@
 * Thanks to **ConcernedApe** for creating Stardew Valley.
 * Thanks to **Pathoschild** for SMAPI and the modding build tools.
 * Thanks to **spacechase0** for Generic Mod Config Menu.
+
+---
+
+## Author's Note
+
+Thank you to everyone who downloads the mod ✨
+
+It definitely isn't perfect—far from it—but I tried to give you freedom while keeping it from breaking the game or stripping away the purpose of each system inside it 😮‍💨.
+
+Any feedback is very welcome so we can keep improving this 😵‍💫☝🏻. Bug reports or ideas to make it better are always appreciated 😸.
+
+Please keep in mind that I might be away for a while depending on my personal situation 😖.
+
+Still, thank you so much to everyone who downloads and plays the mod! I tried my best to make it comfortable without taking away the purpose of the original game—just trying to adapt a pace that fits each person.
