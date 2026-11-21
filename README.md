@@ -4,7 +4,7 @@
 
 # Stardew QOL
 
-[![Nexus Mods](https://img.shields.io/badge/Nexus%20Mods-Stardew%20QOL-orange?style=for-the-badge)](https://www.nexusmods.com/stardewvalley/mods/55821)
+[![Nexus Mods](https://img.shields.io/badge/Nexus%20Mods-Download-orange?style=for-the-badge&logo=nexusmods)](https://www.nexusmods.com/stardewvalley/mods/55821)
 [![SMAPI](https://img.shields.io/badge/SMAPI-4.0.0%2B-blue?style=for-the-badge&logo=github)](https://smapi.io/)
 [![Stardew Valley](https://img.shields.io/badge/Game-Stardew%20Valley-green?style=for-the-badge)](https://www.stardewvalley.net/)
 [![GMCM](https://img.shields.io/badge/Optional-Generic%20Mod%20Config%20Menu-purple?style=for-the-badge)](https://www.nexusmods.com/stardewvalley/mods/5098)
@@ -20,8 +20,6 @@
 *Stardew QOL tries its best to match your pace.*
 
 > **Note:** This release is designed for **singleplayer**. A separate multiplayer version is being worked on.
->
-> **Nexus Mods Page:** https://www.nexusmods.com/stardewvalley/mods/55821
 
 ---
 
