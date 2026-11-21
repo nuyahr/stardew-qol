@@ -1,4 +1,4 @@
-# <div align="center">
+<div align="center">
 
 <img src="https://staticdelivery.nexusmods.com/mods/1303/images/55821/55821-1795282452-1056202694.jpg" alt="Stardew QOL Thumbnail" width="600" />
 
@@ -15,7 +15,7 @@
 
 ## Description
 
-**Stardew QOL** is a modular and highly customizable quality-of-life mod for Stardew Valley[cite: 15]. Designed to adapt to your playstyle without breaking game balance, it gives you full control over time passage, automatic energy and health regeneration, and dynamic weather frequency[cite: 13, 18]. Every module and individual feature can be toggled or fine-tuned in-game at any time[cite: 13, 18].
+**Stardew QOL** is a modular and highly customizable quality-of-life mod for Stardew Valley. Designed to adapt to your playstyle without breaking game balance, it gives you full control over time passage, automatic energy and health regeneration, and dynamic weather frequency. Every module and individual feature can be toggled or fine-tuned in-game at any time.
 
 *Stardew QOL tries its best to match your pace.*
 
@@ -24,47 +24,47 @@
 ## Main Features
 
 ### Time Control Module
-* **Custom Clock Speed:** Adjust how many real-world seconds pass per 10 in-game minutes (from the default 7 seconds up to 720 seconds for much longer, relaxing days). Higher values make the clock slower, while lower values make it faster[cite: 13, 18].
-* **24-Hour Real-Time Cycle:** Play with a true 1:1 real-time day cycle (overrides custom clock speed)[cite: 13, 18].
-* **Museum Library Fast-Forward:** Speed up the clock (1s to 6s per 10 in-game minutes, where fewer seconds means faster clock speed and more seconds means slower than 1s) while sitting at the small study tables in the lower area of the Museum Library before 6:00 PM[cite: 13, 18]. Includes an optional **24h Balance** mode that adjusts the remaining day's clock speed to compensate for time skipped while seated[cite: 18].
+* **Custom Clock Speed:** Adjust how many real-world seconds pass per 10 in-game minutes (from the default 7 seconds up to 720 seconds for much longer, relaxing days). Higher values make the clock slower, while lower values make it faster.
+* **24-Hour Real-Time Cycle:** Play with a true 1:1 real-time day cycle (overrides custom clock speed).
+* **Museum Library Fast-Forward:** Speed up the clock (1s to 6s per 10 in-game minutes, where fewer seconds means faster clock speed and more seconds means slower than 1s) while sitting at the small study tables in the lower area of the Museum Library before 6:00 PM. Includes an optional **24h Balance** mode that adjusts the remaining day's clock speed to compensate for time skipped while seated.
 
 ### Automatic Energy Recovery
-* **Activity-Based Modes:** Configure distinct regeneration amounts and intervals for *General Recovery*, *While Walking*, *While Standing Still*, *While Seated* (accelerates proportionally when using the Museum Library fast-forward), and *While Holding a Fishing Rod*. Only one mode runs at a time to prevent stacking[cite: 13, 18].
-* **Clock-Synced & Bypassable:** Energy recovery follows the in-game clock's seconds rather than real-world time—so the longer the 10-minute interval is, the slower energy recovers, and the faster the 10-minute clock ticks, the faster energy recovers. Players can even take advantage of this to bypass or speed up energy regeneration by making the 10-minute clock faster[cite: 13, 18].
-* **Action Cooldown:** Automatically pauses energy regeneration for 1 to 3 seconds after performing an action that consumes stamina[cite: 13, 18].
+* **Activity-Based Modes:** Configure distinct regeneration amounts and intervals for *General Recovery*, *While Walking*, *While Standing Still*, *While Seated* (accelerates proportionally when using the Museum Library fast-forward), and *While Holding a Fishing Rod*. Only one mode runs at a time to prevent stacking.
+* **Clock-Synced & Bypassable:** Energy recovery follows the in-game clock's seconds rather than real-world time—so the longer the 10-minute interval is, the slower energy recovers, and the faster the 10-minute clock ticks, the faster energy recovers. Players can even take advantage of this to bypass or speed up energy regeneration by making the 10-minute clock faster.
+* **Action Cooldown:** Automatically pauses energy regeneration for 1 to 3 seconds after performing an action that consumes stamina.
 
 ### Automatic Health Recovery
-* **Activity-Based Modes:** Independent regeneration settings for *General Recovery*, *While Walking*, *While Standing Still*, and *While Seated*. Fractional healing values smoothly accumulate until a full health point is restored[cite: 13, 18].
-* **Shared Damage Cooldown:** Taking damage temporarily pauses both Health and Energy regeneration (configurable from 1 to 3 seconds)[cite: 13, 18].
+* **Activity-Based Modes:** Independent regeneration settings for *General Recovery*, *While Walking*, *While Standing Still*, and *While Seated*. Fractional healing values smoothly accumulate until a full health point is restored.
+* **Shared Damage Cooldown:** Taking damage temporarily pauses both Health and Energy regeneration (configurable from 1 to 3 seconds).
 
 ### Dynamic Climate Module
-* **Additional Weather Rolls:** Adds configurable bonus chances (1% to 75%) for Rain and Snow on eligible sunny days without replacing or reducing the game's natural weather[cite: 13, 18].
-* **Balanced Caps:** Set maximum limits per half-month (resets on the 1st and 15th of each season). Calculated strictly by the in-game calendar so altered clock speeds never cause extra weather rolls[cite: 13, 18].
+* **Additional Weather Rolls:** Adds configurable bonus chances (1% to 75%) for Rain and Snow on eligible sunny days without replacing or reducing the game's natural weather.
+* **Balanced Caps:** Set maximum limits per half-month (resets on the 1st and 15th of each season). Calculated strictly by the in-game calendar so altered clock speeds never cause extra weather rolls.
 
 ### Full Customization & Localization
-* **Master Toggle & Notifications:** Enable or disable the entire mod or individual modules on the fly without losing your saved settings. Optional HUD notifications let you know when automatic time acceleration starts or ends[cite: 13, 18].
-* **Languages Included:** Built-in support for English and Portuguese (PT-BR)[cite: 17, 18].
+* **Master Toggle & Notifications:** Enable or disable the entire mod or individual modules on the fly without losing your saved settings. Optional HUD notifications let you know when automatic time acceleration starts or ends.
+* **Languages Included:** Built-in support for English and Portuguese (PT-BR).
 
 ---
 
 ## Requirements
 
-* **Required:** [SMAPI](https://smapi.io/) (4.0.0 or later)[cite: 15].
-* **Recommended (Optional):** [Generic Mod Config Menu (GMCM)](https://www.nexusmods.com/stardewvalley/mods/5098) to configure all options easily in-game. If not installed, the mod can still be configured by editing `config.json`[cite: 13].
+* **Required:** [SMAPI](https://smapi.io/) (4.0.0 or later).
+* **Recommended (Optional):** [Generic Mod Config Menu (GMCM)](https://www.nexusmods.com/stardewvalley/mods/5098) to configure all options easily in-game. If not installed, the mod can still be configured by editing `config.json`.
 
 ---
 
 ## Installation Instructions
 
-1. Install the latest version of [SMAPI](https://smapi.io/)[cite: 15].
-2. Download **Stardew QOL** from [Nexus Mods](https://www.nexusmods.com/stardewvalley/mods/55821) and extract the ZIP archive[cite: 15].
-3. Move the `StardewQOL` folder into your `Stardew Valley/Mods` directory[cite: 13, 15].
-4. Launch the game using SMAPI[cite: 15].
+1. Install the latest version of [SMAPI](https://smapi.io/).
+2. Download **Stardew QOL** from [Nexus Mods](https://www.nexusmods.com/stardewvalley/mods/55821) and extract the ZIP archive.
+3. Move the `StardewQOL` folder into your `Stardew Valley/Mods` directory.
+4. Launch the game using SMAPI.
 
 ---
 
 ## Shout Outs
 
 * Thanks to **ConcernedApe** for creating Stardew Valley.
-* Thanks to **Pathoschild** for SMAPI and the modding build tools[cite: 12].
-* Thanks to **spacechase0** for Generic Mod Config Menu[cite: 13].
+* Thanks to **Pathoschild** for SMAPI and the modding build tools.
+* Thanks to **spacechase0** for Generic Mod Config Menu.
