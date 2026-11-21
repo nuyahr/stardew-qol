@@ -1,0 +1,12 @@
+{
+  "Name": "Stardew QOL",
+  "Author": "Nuya",
+  "Version": "2.1.0",
+  "Description": "Quality-of-life features for Stardew Valley.",
+  "UniqueID": "Nuya.StardewQOL",
+  "EntryDll": "StardewQOL.dll",
+  "MinimumApiVersion": "4.0.0",
+  "UpdateKeys": [
+    "Nexus:55821"
+  ]
+}
