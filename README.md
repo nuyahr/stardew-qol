@@ -24,21 +24,21 @@
 ## Main Features
 
 ### Time Control Module
-* **Custom Clock Speed:** Adjust how many real-world seconds pass per 10 in-game minutes (from the default 7 seconds up to 720 seconds for much longer, relaxing days). Higher values make the clock slower, while lower values make it faster.
+* **Custom Clock Speed:** Adjust how many real-world seconds pass per 10 in-game minutes (from 7.0s up to 720.0s, in 0.5s steps, for much longer, relaxing days). Higher values make the clock slower, while lower values make it faster.
 * **24-Hour Real-Time Cycle:** Play with a true 1:1 real-time day cycle (overrides custom clock speed).
-* **Museum Library Fast-Forward:** Speed up the clock (1s to 6s per 10 in-game minutes, where fewer seconds means faster clock speed and more seconds means slower than 1s) while sitting at the small study tables in the lower area of the Museum Library before 6:00 PM. Includes an optional **24h Balance** mode that adjusts the remaining day's clock speed to compensate for time skipped while seated.
+* **Museum Library Fast-Forward:** Speed up the clock (1.0s to 6.0s per 10 in-game minutes, in 0.5s steps—where fewer seconds means faster clock speed and more seconds means slower than 1.0s) while sitting at the small study tables in the lower area of the Museum Library before 6:00 PM. Includes an optional **24h Balance** mode that adjusts the remaining day's clock speed to compensate for time skipped while seated.
 
 ### Automatic Energy Recovery
-* **Activity-Based Modes:** Configure distinct regeneration amounts and intervals for *General Recovery*, *While Walking*, *While Standing Still*, *While Seated* (accelerates proportionally when using the Museum Library fast-forward), and *While Holding a Fishing Rod*. Only one mode runs at a time to prevent stacking.
-* **Clock-Synced & Bypassable:** Energy recovery follows the in-game clock's seconds rather than real-world time—so the longer the 10-minute interval is, the slower energy recovers, and the faster the 10-minute clock ticks, the faster energy recovers. Players can even take advantage of this to bypass or speed up energy regeneration by making the 10-minute clock faster.
-* **Action Cooldown:** Automatically pauses energy regeneration for 1 to 3 seconds after performing an action that consumes stamina.
+* **Activity-Based Modes:** Configure distinct regeneration amounts and real-world second intervals for *General Recovery*, *While Walking*, *While Standing Still*, *While Seated*, and *While Holding a Fishing Rod*. Only one mode runs at a time to prevent stacking.
+* **Real-Time Intervals:** Recovery intervals run on real-world seconds rather than in-game clock speed, so regeneration timing stays consistent regardless of how fast or slow the day passes.
+* **Action Cooldown:** Automatically pauses energy regeneration for 1.0s to 3.0s (in 1.0s steps) after performing an action that consumes stamina.
 
 ### Automatic Health Recovery
-* **Activity-Based Modes:** Independent regeneration settings for *General Recovery*, *While Walking*, *While Standing Still*, and *While Seated*. Fractional healing values smoothly accumulate until a full health point is restored.
-* **Shared Damage Cooldown:** Taking damage temporarily pauses both Health and Energy regeneration (configurable from 1 to 3 seconds).
+* **Activity-Based Modes:** Independent regeneration amounts and real-world second intervals for *General Recovery*, *While Walking*, *While Standing Still*, and *While Seated*. Fractional healing values smoothly accumulate until a full health point is restored.
+* **Shared Damage Cooldown:** Taking damage temporarily pauses both Health and Energy regeneration (configurable from 1.0s to 3.0s, in 1.0s steps).
 
 ### Dynamic Climate Module
-* **Additional Weather Rolls:** Adds configurable bonus chances (1% to 75%) for Rain and Snow on eligible sunny days without replacing or reducing the game's natural weather.
+* **Additional Weather Rolls:** Adds configurable bonus chances (1% up to 75% for Rain and Snow; 1% up to 35% for Storms) on eligible sunny days without replacing or reducing the game's natural weather.
 * **Balanced Caps:** Set maximum limits per half-month (resets on the 1st and 15th of each season). Calculated strictly by the in-game calendar so altered clock speeds never cause extra weather rolls.
 
 ### Full Customization & Localization
