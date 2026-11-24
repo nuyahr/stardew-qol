@@ -147,8 +147,9 @@ namespace StardewQOL
                     modo = "biblioteca";
                     quantidade = this.Config.SaudeSentadoQuantidade; intervalo = this.Config.SaudeSentadoIntervalo;
                 }
-                else if (this.Config.RecuperacaoSaudeSentadoAtivada && jogador.IsSitting())
+                else if (this.Config.RecuperacaoSaudeSentadoAtivada && (jogador.IsSitting() || jogador.isRidingHorse()))
                 {
+                    // Cadeiras, bancos e montaria compartilham a configuração de recuperação sentado.
                     modo = "sentado"; quantidade = this.Config.SaudeSentadoQuantidade; intervalo = this.Config.SaudeSentadoIntervalo;
                 }
                 else if (!andando && this.Config.RecuperacaoSaudeParadoAtivada)
@@ -167,6 +168,10 @@ namespace StardewQOL
 
             if (modo is not null)
             {
+                // Bônus de 20% somente nos assentos que realmente aceleram o relógio.
+                if (this.usandoVelocidadeSentado && (modo == "sentado" || modo == "biblioteca"))
+                    quantidade *= 1.2f;
+
                 this.acumuladoresRecuperacaoSaude.TryGetValue(modo, out double acumulado);
                 acumulado += decorrido;
                 // O intervalo é contado em segundos reais, sem depender da velocidade do relógio do jogo.

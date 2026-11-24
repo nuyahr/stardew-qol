@@ -49,13 +49,15 @@ namespace StardewQOL
                 this.estadoEnergiaInicializado = true;
             }
 
-            // Menus, diálogos e eventos pausam a recuperação e congelam o cooldown.
-            // Não contar tempo real enquanto uma interface ou evento bloqueia a jogabilidade.
+            // Menus, diálogos, eventos e a piscina do Spa pausam a recuperação personalizada.
+            // No Spa, a recuperação original do jogo continua ativa; o mod apenas evita somar
+            // sua própria recuperação de energia. O cooldown e os acumuladores ficam pausados.
             bool interfaceAberta = Game1.activeClickableMenu is not null
                 || Game1.dialogueUp
                 || Game1.eventUp;
+            bool jogadorNasAguasTermais = jogador.currentLocation?.NameOrUniqueName == "BathHouse_Pool";
 
-            if (interfaceAberta)
+            if (interfaceAberta || jogadorNasAguasTermais)
             {
                 this.inicioPausaEnergiaUtc ??= agora;
                 this.ultimaStamina = jogador.Stamina;
@@ -64,8 +66,8 @@ namespace StardewQOL
                 return;
             }
 
-            // Ao fechar a interface, desloca o fim do cooldown pelo tempo pausado,
-            // preservando exatamente o tempo restante que havia antes do menu.
+            // Ao sair da interface ou das águas termais, desloca o fim do cooldown
+            // pelo tempo pausado, preservando exatamente o tempo restante anterior.
             if (this.inicioPausaEnergiaUtc.HasValue)
             {
                 TimeSpan duracaoPausa = agora - this.inicioPausaEnergiaUtc.Value;
@@ -122,9 +124,9 @@ namespace StardewQOL
                     quantidade = this.Config.EnergiaSentadoQuantidade;
                     intervalo = this.Config.EnergiaSentadoIntervalo;
                 }
-                else if (this.Config.RecuperacaoSentadoAtivada && jogador.IsSitting())
+                else if (this.Config.RecuperacaoSentadoAtivada && (jogador.IsSitting() || jogador.isRidingHorse()))
                 {
-                    // Qualquer cadeira, banco ou assento usa a configuração de sentado.
+                    // Cadeiras, bancos e montaria usam a mesma configuração de sentado.
                     modo = "sentado";
                     quantidade = this.Config.EnergiaSentadoQuantidade;
                     intervalo = this.Config.EnergiaSentadoIntervalo;
@@ -159,6 +161,10 @@ namespace StardewQOL
             // Cooldown e minigame também pausam todos os contadores, sem apagar o progresso.
             if (modo is not null)
             {
+                // Bônus de 20% somente nos assentos que realmente aceleram o relógio.
+                if (this.usandoVelocidadeSentado && (modo == "sentado" || modo == "biblioteca"))
+                    quantidade *= 1.2f;
+
                 this.acumuladoresRecuperacaoEnergia.TryGetValue(modo, out double acumulado);
                 acumulado += decorrido;
 

@@ -29,15 +29,15 @@ namespace StardewQOL
         /// <summary>Valida os valores do módulo Saúde sem alterar as opções de Energia ou Tempo.</summary>
         private void ValidarSaude()
         {
-            this.SaudeGeralQuantidade = ValidarQuantidade(this.SaudeGeralQuantidade, 1.5f, 2.0f);
-            this.SaudeGeralIntervalo = ValidarIntervalo(this.SaudeGeralIntervalo, 5.0f, 5.0f);
-            this.SaudeAndandoQuantidade = ValidarQuantidade(this.SaudeAndandoQuantidade, 1.0f, 1.5f);
-            this.SaudeAndandoIntervalo = ValidarIntervalo(this.SaudeAndandoIntervalo, 8.0f, 8.0f);
-            this.SaudeParadoQuantidade = ValidarQuantidade(this.SaudeParadoQuantidade, 1.5f, 2.0f);
-            this.SaudeParadoIntervalo = ValidarIntervalo(this.SaudeParadoIntervalo, 4.0f, 4.0f);
-            this.SaudeSentadoQuantidade = ValidarQuantidade(this.SaudeSentadoQuantidade, 2.0f, 3.0f);
-            this.SaudeSentadoIntervalo = ValidarIntervalo(this.SaudeSentadoIntervalo, 3.0f, 3.0f);
-            this.CooldownDanoSegundos = ValidarIntervalo(this.CooldownDanoSegundos, 2.0f, 3.0f, minimo: 1.0f);
+            this.SaudeGeralQuantidade = ValidarQuantidade(this.SaudeGeralQuantidade, 1.5f, 1.5f);
+            this.SaudeGeralIntervalo = ValidarIntervalo(this.SaudeGeralIntervalo, 5.0f, 5.0f, minimo: 5.0f * 0.1f);
+            this.SaudeAndandoQuantidade = ValidarQuantidade(this.SaudeAndandoQuantidade, 1.0f, 1.0f);
+            this.SaudeAndandoIntervalo = ValidarIntervalo(this.SaudeAndandoIntervalo, 8.0f, 8.0f, minimo: 8.0f * 0.1f);
+            this.SaudeParadoQuantidade = ValidarQuantidade(this.SaudeParadoQuantidade, 1.5f, 1.5f);
+            this.SaudeParadoIntervalo = ValidarIntervalo(this.SaudeParadoIntervalo, 4.0f, 4.0f, minimo: 4.0f * 0.1f);
+            this.SaudeSentadoQuantidade = ValidarQuantidade(this.SaudeSentadoQuantidade, 2.0f, 2.0f);
+            this.SaudeSentadoIntervalo = ValidarIntervalo(this.SaudeSentadoIntervalo, 3.0f, 3.0f, minimo: 3.0f * 0.1f);
+            this.CooldownDanoSegundos = ValidarIntervalo(this.CooldownDanoSegundos, 2.0f, 4.0f, minimo: 2.0f);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
@@ -196,6 +196,34 @@ namespace StardewQOL
                 getValue: () => this.Config.AceleracaoMesaAtivada,
                 setValue: value => this.Config.AceleracaoMesaAtivada = value,
                 fieldId: "aceleracao-mesa-ativada");
+            configMenu.AddBoolOption(
+                mod: this.ModManifest,
+                name: () => this.Helper.Translation.Get("config.seated-time.fountain.name"),
+                tooltip: () => this.Helper.Translation.Get("config.seated-time.fountain.tooltip"),
+                getValue: () => this.Config.AceleracaoChafarizAtivada,
+                setValue: value => this.Config.AceleracaoChafarizAtivada = value,
+                fieldId: "aceleracao-chafariz-ativada");
+            configMenu.AddBoolOption(
+                mod: this.ModManifest,
+                name: () => this.Helper.Translation.Get("config.seated-time.saloon.name"),
+                tooltip: () => this.Helper.Translation.Get("config.seated-time.saloon.tooltip"),
+                getValue: () => this.Config.AceleracaoSaloonAtivada,
+                setValue: value => this.Config.AceleracaoSaloonAtivada = value,
+                fieldId: "aceleracao-saloon-ativada");
+            configMenu.AddBoolOption(
+                mod: this.ModManifest,
+                name: () => this.Helper.Translation.Get("config.seated-time.library.name"),
+                tooltip: () => this.Helper.Translation.Get("config.seated-time.library.tooltip"),
+                getValue: () => this.Config.AceleracaoBibliotecaAtivada,
+                setValue: value => this.Config.AceleracaoBibliotecaAtivada = value,
+                fieldId: "aceleracao-biblioteca-ativada");
+            configMenu.AddBoolOption(
+                mod: this.ModManifest,
+                name: () => this.Helper.Translation.Get("config.seated-time.beach.name"),
+                tooltip: () => this.Helper.Translation.Get("config.seated-time.beach.tooltip"),
+                getValue: () => this.Config.AceleracaoPraiaAtivada,
+                setValue: value => this.Config.AceleracaoPraiaAtivada = value,
+                fieldId: "aceleracao-praia-ativada");
             configMenu.AddNumberOption(
                 mod: this.ModManifest,
                 name: () => this.Helper.Translation.Get("config.seated-time.speed.name"),
@@ -213,20 +241,6 @@ namespace StardewQOL
                 () => this.Helper.Translation.Get("config.page.back-to-time.tooltip"));
             configMenu.AddParagraph(this.ModManifest,
                 () => this.Helper.Translation.Get("config.page.24h.description"));
-            configMenu.AddBoolOption(
-                mod: this.ModManifest,
-                name: () => this.Helper.Translation.Get("config.24h.all.name"),
-                tooltip: () => this.Helper.Translation.Get("config.24h.all.tooltip"),
-                getValue: () => this.Config.AtivarTodos24h,
-                setValue: value =>
-                {
-                    this.Config.AtivarTodos24h = value;
-                    if (this.Config.TempoModuloAtivado && this.Config.Ciclo24hEfetivamenteAtivado && this.inicioCiclo24hUtc is null && Context.IsWorldReady)
-                        this.IniciarCicloPeloHorarioAtual();
-                    if (!this.Config.Ciclo24hEfetivamenteAtivado)
-                        this.inicioCiclo24hUtc = null;
-                },
-                fieldId: "24h-todos-modulos");
             configMenu.AddBoolOption(
                 mod: this.ModManifest,
                 name: () => this.Helper.Translation.Get("config.24h.cycle.name"),
@@ -277,17 +291,17 @@ namespace StardewQOL
                 setValue: value => this.Config.EnergiaModuloAtivado = value,
                 fieldId: "energia-modulo-ativado");
 
-            this.RegistrarPaginaEnergia(configMenu, "energy-general", "config.energy.general", () => this.Config.RecuperacaoGeralAtivada, v => this.Config.RecuperacaoGeralAtivada = v, () => this.Config.EnergiaGeralQuantidade, v => this.Config.EnergiaGeralQuantidade = v, () => this.Config.EnergiaGeralIntervalo, v => this.Config.EnergiaGeralIntervalo = v, 5.0f, 2.5f, "energia-geral");
-            this.RegistrarPaginaEnergia(configMenu, "energy-walking", "config.energy.walking", () => this.Config.RecuperacaoAndandoAtivada, v => this.Config.RecuperacaoAndandoAtivada = v, () => this.Config.EnergiaAndandoQuantidade, v => this.Config.EnergiaAndandoQuantidade = v, () => this.Config.EnergiaAndandoIntervalo, v => this.Config.EnergiaAndandoIntervalo = v, 8.0f, 2.0f, "energia-andando");
-            this.RegistrarPaginaEnergia(configMenu, "energy-idle", "config.energy.idle", () => this.Config.RecuperacaoParadoAtivada, v => this.Config.RecuperacaoParadoAtivada = v, () => this.Config.EnergiaParadoQuantidade, v => this.Config.EnergiaParadoQuantidade = v, () => this.Config.EnergiaParadoIntervalo, v => this.Config.EnergiaParadoIntervalo = v, 4.0f, 3.0f, "energia-parado");
-            this.RegistrarPaginaEnergia(configMenu, "energy-seated", "config.energy.seated", () => this.Config.RecuperacaoSentadoAtivada, v => this.Config.RecuperacaoSentadoAtivada = v, () => this.Config.EnergiaSentadoQuantidade, v => this.Config.EnergiaSentadoQuantidade = v, () => this.Config.EnergiaSentadoIntervalo, v => this.Config.EnergiaSentadoIntervalo = v, 3.0f, 4.0f, "energia-sentado");
-            this.RegistrarPaginaEnergia(configMenu, "energy-fishing", "config.energy.fishing", () => this.Config.RecuperacaoPescaAtivada, v => this.Config.RecuperacaoPescaAtivada = v, () => this.Config.EnergiaPescaQuantidade, v => this.Config.EnergiaPescaQuantidade = v, () => this.Config.EnergiaPescaIntervalo, v => this.Config.EnergiaPescaIntervalo = v, 12.0f, 5.0f, "energia-pesca");
+            this.RegistrarPaginaEnergia(configMenu, "energy-general", "config.energy.general", () => this.Config.RecuperacaoGeralAtivada, v => this.Config.RecuperacaoGeralAtivada = v, () => this.Config.EnergiaGeralQuantidade, v => this.Config.EnergiaGeralQuantidade = v, () => this.Config.EnergiaGeralIntervalo, v => this.Config.EnergiaGeralIntervalo = v, 5.0f, 1.5f, "energia-geral");
+            this.RegistrarPaginaEnergia(configMenu, "energy-walking", "config.energy.walking", () => this.Config.RecuperacaoAndandoAtivada, v => this.Config.RecuperacaoAndandoAtivada = v, () => this.Config.EnergiaAndandoQuantidade, v => this.Config.EnergiaAndandoQuantidade = v, () => this.Config.EnergiaAndandoIntervalo, v => this.Config.EnergiaAndandoIntervalo = v, 8.0f, 1.0f, "energia-andando");
+            this.RegistrarPaginaEnergia(configMenu, "energy-idle", "config.energy.idle", () => this.Config.RecuperacaoParadoAtivada, v => this.Config.RecuperacaoParadoAtivada = v, () => this.Config.EnergiaParadoQuantidade, v => this.Config.EnergiaParadoQuantidade = v, () => this.Config.EnergiaParadoIntervalo, v => this.Config.EnergiaParadoIntervalo = v, 4.0f, 1.5f, "energia-parado");
+            this.RegistrarPaginaEnergia(configMenu, "energy-seated", "config.energy.seated", () => this.Config.RecuperacaoSentadoAtivada, v => this.Config.RecuperacaoSentadoAtivada = v, () => this.Config.EnergiaSentadoQuantidade, v => this.Config.EnergiaSentadoQuantidade = v, () => this.Config.EnergiaSentadoIntervalo, v => this.Config.EnergiaSentadoIntervalo = v, 3.0f, 2.0f, "energia-sentado");
+            this.RegistrarPaginaEnergia(configMenu, "energy-fishing", "config.energy.fishing", () => this.Config.RecuperacaoPescaAtivada, v => this.Config.RecuperacaoPescaAtivada = v, () => this.Config.EnergiaPescaQuantidade, v => this.Config.EnergiaPescaQuantidade = v, () => this.Config.EnergiaPescaIntervalo, v => this.Config.EnergiaPescaIntervalo = v, 12.0f, 2.0f, "energia-pesca");
 
             configMenu.AddPage(this.ModManifest, "energy-cooldown", () => this.Helper.Translation.Get("config.energy.cooldown.name"));
             configMenu.AddPageLink(this.ModManifest, "energy", () => "@ " + this.Helper.Translation.Get("config.page.back-to-energy.name"));
             configMenu.AddParagraph(this.ModManifest, () => this.Helper.Translation.Get("config.energy.cooldown.description"));
             configMenu.AddBoolOption(this.ModManifest, () => this.Config.CooldownEnergiaAtivado, v => this.Config.CooldownEnergiaAtivado = v, () => this.Helper.Translation.Get("config.energy.cooldown.enabled.name"), () => this.Helper.Translation.Get("config.energy.cooldown.enabled.tooltip"), "energia-cooldown-ativado");
-            configMenu.AddNumberOption(this.ModManifest, () => this.Config.CooldownEnergiaSegundos, v => { this.Config.CooldownEnergiaSegundos = v; this.Config.Validar(); }, () => this.Helper.Translation.Get("config.energy.cooldown.seconds.name"), () => this.Helper.Translation.Get("config.energy.cooldown.seconds.tooltip"), 1.0f, 3.0f, 1.0f, v => $"{v:0.0} s", "energia-cooldown-segundos");
+            configMenu.AddNumberOption(this.ModManifest, () => this.Config.CooldownEnergiaSegundos, v => { this.Config.CooldownEnergiaSegundos = v; this.Config.Validar(); }, () => this.Helper.Translation.Get("config.energy.cooldown.seconds.name"), () => this.Helper.Translation.Get("config.energy.cooldown.seconds.tooltip"), 3.0f, 5.0f, 1.0f, v => $"{v:0.0} s", "energia-cooldown-segundos");
 
             // Módulo Saúde: estrutura paralela à Energia, com cooldown de dano compartilhado.
             configMenu.AddPage(this.ModManifest, "health",
@@ -311,16 +325,16 @@ namespace StardewQOL
                 () => this.Helper.Translation.Get("config.health.module.enabled.tooltip"),
                 "saude-modulo-ativado");
 
-            this.RegistrarPaginaSaude(configMenu, "health-general", "config.health.general", () => this.Config.RecuperacaoSaudeGeralAtivada, v => this.Config.RecuperacaoSaudeGeralAtivada = v, () => this.Config.SaudeGeralQuantidade, v => this.Config.SaudeGeralQuantidade = v, () => this.Config.SaudeGeralIntervalo, v => this.Config.SaudeGeralIntervalo = v, 5.0f, 2.0f, "saude-geral");
-            this.RegistrarPaginaSaude(configMenu, "health-walking", "config.health.walking", () => this.Config.RecuperacaoSaudeAndandoAtivada, v => this.Config.RecuperacaoSaudeAndandoAtivada = v, () => this.Config.SaudeAndandoQuantidade, v => this.Config.SaudeAndandoQuantidade = v, () => this.Config.SaudeAndandoIntervalo, v => this.Config.SaudeAndandoIntervalo = v, 8.0f, 1.5f, "saude-andando");
-            this.RegistrarPaginaSaude(configMenu, "health-idle", "config.health.idle", () => this.Config.RecuperacaoSaudeParadoAtivada, v => this.Config.RecuperacaoSaudeParadoAtivada = v, () => this.Config.SaudeParadoQuantidade, v => this.Config.SaudeParadoQuantidade = v, () => this.Config.SaudeParadoIntervalo, v => this.Config.SaudeParadoIntervalo = v, 4.0f, 2.0f, "saude-parado");
-            this.RegistrarPaginaSaude(configMenu, "health-seated", "config.health.seated", () => this.Config.RecuperacaoSaudeSentadoAtivada, v => this.Config.RecuperacaoSaudeSentadoAtivada = v, () => this.Config.SaudeSentadoQuantidade, v => this.Config.SaudeSentadoQuantidade = v, () => this.Config.SaudeSentadoIntervalo, v => this.Config.SaudeSentadoIntervalo = v, 3.0f, 3.0f, "saude-sentado");
+            this.RegistrarPaginaSaude(configMenu, "health-general", "config.health.general", () => this.Config.RecuperacaoSaudeGeralAtivada, v => this.Config.RecuperacaoSaudeGeralAtivada = v, () => this.Config.SaudeGeralQuantidade, v => this.Config.SaudeGeralQuantidade = v, () => this.Config.SaudeGeralIntervalo, v => this.Config.SaudeGeralIntervalo = v, 5.0f, 1.5f, "saude-geral");
+            this.RegistrarPaginaSaude(configMenu, "health-walking", "config.health.walking", () => this.Config.RecuperacaoSaudeAndandoAtivada, v => this.Config.RecuperacaoSaudeAndandoAtivada = v, () => this.Config.SaudeAndandoQuantidade, v => this.Config.SaudeAndandoQuantidade = v, () => this.Config.SaudeAndandoIntervalo, v => this.Config.SaudeAndandoIntervalo = v, 8.0f, 1.0f, "saude-andando");
+            this.RegistrarPaginaSaude(configMenu, "health-idle", "config.health.idle", () => this.Config.RecuperacaoSaudeParadoAtivada, v => this.Config.RecuperacaoSaudeParadoAtivada = v, () => this.Config.SaudeParadoQuantidade, v => this.Config.SaudeParadoQuantidade = v, () => this.Config.SaudeParadoIntervalo, v => this.Config.SaudeParadoIntervalo = v, 4.0f, 1.5f, "saude-parado");
+            this.RegistrarPaginaSaude(configMenu, "health-seated", "config.health.seated", () => this.Config.RecuperacaoSaudeSentadoAtivada, v => this.Config.RecuperacaoSaudeSentadoAtivada = v, () => this.Config.SaudeSentadoQuantidade, v => this.Config.SaudeSentadoQuantidade = v, () => this.Config.SaudeSentadoIntervalo, v => this.Config.SaudeSentadoIntervalo = v, 3.0f, 2.0f, "saude-sentado");
 
             configMenu.AddPage(this.ModManifest, "health-damage-cooldown", () => this.Helper.Translation.Get("config.health.damage-cooldown.name"));
             configMenu.AddPageLink(this.ModManifest, "health", () => "@ " + this.Helper.Translation.Get("config.page.back-to-health.name"));
             configMenu.AddParagraph(this.ModManifest, () => this.Helper.Translation.Get("config.health.damage-cooldown.description"));
             configMenu.AddBoolOption(this.ModManifest, () => this.Config.CooldownDanoAtivado, v => this.Config.CooldownDanoAtivado = v, () => this.Helper.Translation.Get("config.health.damage-cooldown.enabled.name"), () => this.Helper.Translation.Get("config.health.damage-cooldown.enabled.tooltip"), "cooldown-dano-ativado");
-            configMenu.AddNumberOption(this.ModManifest, () => this.Config.CooldownDanoSegundos, v => { this.Config.CooldownDanoSegundos = v; this.Config.Validar(); }, () => this.Helper.Translation.Get("config.health.damage-cooldown.seconds.name"), () => this.Helper.Translation.Get("config.health.damage-cooldown.seconds.tooltip"), 1.0f, 3.0f, 1.0f, v => $"{v:0.0} s", "cooldown-dano-segundos");
+            configMenu.AddNumberOption(this.ModManifest, () => this.Config.CooldownDanoSegundos, v => { this.Config.CooldownDanoSegundos = v; this.Config.Validar(); }, () => this.Helper.Translation.Get("config.health.damage-cooldown.seconds.name"), () => this.Helper.Translation.Get("config.health.damage-cooldown.seconds.tooltip"), 2.0f, 4.0f, 1.0f, v => $"{v:0.0} s", "cooldown-dano-segundos");
 
             // Módulo Clima: página geral e configurações independentes por tipo.
             configMenu.AddPage(this.ModManifest, "climate",
@@ -450,7 +464,7 @@ namespace StardewQOL
             menu.AddNumberOption(this.ModManifest, getInterval, v => { setInterval(v); this.Config.Validar(); },
                 () => this.Helper.Translation.Get("config.energy.interval.name"),
                 () => this.Helper.Translation.Get("config.energy.interval.tooltip"),
-                0.1f, maxInterval, 0.1f, v => $"{v:0.0} s", fieldPrefix + "-intervalo");
+                maxInterval * 0.1f, maxInterval, 0.1f, v => $"{v:0.0} s", fieldPrefix + "-intervalo");
         }
 
         /// <summary>Cria uma página padronizada para um modo de recuperação de saúde.</summary>
@@ -474,7 +488,7 @@ namespace StardewQOL
             menu.AddNumberOption(this.ModManifest, getInterval, v => { setInterval(v); this.Config.Validar(); },
                 () => this.Helper.Translation.Get("config.health.interval.name"),
                 () => this.Helper.Translation.Get("config.health.interval.tooltip"),
-                0.1f, maxInterval, 0.1f, v => $"{v:0.0} s", fieldPrefix + "-intervalo");
+                maxInterval * 0.1f, maxInterval, 0.1f, v => $"{v:0.0} s", fieldPrefix + "-intervalo");
         }
 
         /// <summary>Restaura todos os valores padrão e reinicializa os estados temporários.</summary>
@@ -504,6 +518,7 @@ namespace StardewQOL
         {
             this.inicioCiclo24hUtc = this.Config.TempoModuloAtivado && this.Config.Ciclo24hEfetivamenteAtivado ? DateTime.UtcNow : null;
             this.usandoVelocidadeSentado = false;
+            this.aceleracaoAssentosExternosBloqueadaAteProximoDia = false;
             this.ResetarEstadoEnergia();
             this.ResetarEstadoSaude();
             if (this.Config.ModAtivado)
@@ -560,9 +575,30 @@ namespace StardewQOL
             else if (this.inicioCiclo24hUtc is null)
                 this.IniciarCicloPeloHorarioAtual();
 
+            bool sentadoNaBiblioteca = this.JogadorSentadoPertoDeMesa();
+            bool sentadoEmBancoDaCidade = this.JogadorSentadoEmBancoPermitidoDaCidade();
+            bool sentadoNoSaloon = this.JogadorSentadoEmAssentoPermitidoDoSaloon();
+            bool sentadoNoBancoDaPraia = this.JogadorSentadoNoBancoPermitidoDaPraia();
+
+            // Ao alcançar 00:00, bloqueia a aceleração dos assentos externos até o próximo dia.
+            // Assim, levantar e sentar novamente depois da meia-noite não reativa a aceleração.
+            if (Game1.timeOfDay >= 2400)
+                this.aceleracaoAssentosExternosBloqueadaAteProximoDia = true;
+
+            // A Biblioteca encerra às 18h; chafariz, Saloon e o banco da praia encerram às 00:00.
+            bool bibliotecaElegivel = sentadoNaBiblioteca && this.Config.AceleracaoBibliotecaAtivada;
+            bool chafarizElegivel = sentadoEmBancoDaCidade && this.Config.AceleracaoChafarizAtivada;
+            bool saloonElegivel = sentadoNoSaloon && this.Config.AceleracaoSaloonAtivada;
+            bool praiaElegivel = sentadoNoBancoDaPraia && this.Config.AceleracaoPraiaAtivada;
+
+            bool dentroDoHorarioPermitido = bibliotecaElegivel
+                ? Game1.timeOfDay < 1800
+                : (chafarizElegivel || saloonElegivel || praiaElegivel)
+                    && Game1.timeOfDay < 2400
+                    && !this.aceleracaoAssentosExternosBloqueadaAteProximoDia;
+
             bool deveAcelerar = this.Config.AceleracaoMesaAtivada
-                && Game1.timeOfDay < 1800
-                && this.JogadorSentadoPertoDeMesa();
+                && dentroDoHorarioPermitido;
 
             if (deveAcelerar != this.usandoVelocidadeSentado)
             {
@@ -606,6 +642,7 @@ namespace StardewQOL
         private void OnReturnedToTitle(object? sender, ReturnedToTitleEventArgs e)
         {
             this.usandoVelocidadeSentado = false;
+            this.aceleracaoAssentosExternosBloqueadaAteProximoDia = false;
             this.inicioCiclo24hUtc = null;
             this.ResetarEstadoEnergia();
             this.ResetarEstadoSaude();

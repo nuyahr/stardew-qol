@@ -24,17 +24,17 @@ namespace StardewQOL
 
         private void ValidarEnergia()
         {
-            this.EnergiaGeralQuantidade = ValidarQuantidade(this.EnergiaGeralQuantidade, 1.5f, 2.5f);
-            this.EnergiaGeralIntervalo = ValidarIntervalo(this.EnergiaGeralIntervalo, 5.0f, 5.0f);
-            this.EnergiaAndandoQuantidade = ValidarQuantidade(this.EnergiaAndandoQuantidade, 1.0f, 2.0f);
-            this.EnergiaAndandoIntervalo = ValidarIntervalo(this.EnergiaAndandoIntervalo, 8.0f, 8.0f);
-            this.EnergiaParadoQuantidade = ValidarQuantidade(this.EnergiaParadoQuantidade, 1.5f, 3.0f);
-            this.EnergiaParadoIntervalo = ValidarIntervalo(this.EnergiaParadoIntervalo, 4.0f, 4.0f);
-            this.EnergiaSentadoQuantidade = ValidarQuantidade(this.EnergiaSentadoQuantidade, 2.0f, 4.0f);
-            this.EnergiaSentadoIntervalo = ValidarIntervalo(this.EnergiaSentadoIntervalo, 3.0f, 3.0f);
-            this.EnergiaPescaQuantidade = ValidarQuantidade(this.EnergiaPescaQuantidade, 2.0f, 5.0f);
-            this.EnergiaPescaIntervalo = ValidarIntervalo(this.EnergiaPescaIntervalo, 3.5f, 12.0f);
-            this.CooldownEnergiaSegundos = ValidarIntervalo(this.CooldownEnergiaSegundos, 3.0f, 3.0f, minimo: 1.0f);
+            this.EnergiaGeralQuantidade = ValidarQuantidade(this.EnergiaGeralQuantidade, 1.5f, 1.5f);
+            this.EnergiaGeralIntervalo = ValidarIntervalo(this.EnergiaGeralIntervalo, 5.0f, 5.0f, minimo: 5.0f * 0.1f);
+            this.EnergiaAndandoQuantidade = ValidarQuantidade(this.EnergiaAndandoQuantidade, 1.0f, 1.0f);
+            this.EnergiaAndandoIntervalo = ValidarIntervalo(this.EnergiaAndandoIntervalo, 8.0f, 8.0f, minimo: 8.0f * 0.1f);
+            this.EnergiaParadoQuantidade = ValidarQuantidade(this.EnergiaParadoQuantidade, 1.5f, 1.5f);
+            this.EnergiaParadoIntervalo = ValidarIntervalo(this.EnergiaParadoIntervalo, 4.0f, 4.0f, minimo: 4.0f * 0.1f);
+            this.EnergiaSentadoQuantidade = ValidarQuantidade(this.EnergiaSentadoQuantidade, 2.0f, 2.0f);
+            this.EnergiaSentadoIntervalo = ValidarIntervalo(this.EnergiaSentadoIntervalo, 3.0f, 3.0f, minimo: 3.0f * 0.1f);
+            this.EnergiaPescaQuantidade = ValidarQuantidade(this.EnergiaPescaQuantidade, 2.0f, 2.0f);
+            this.EnergiaPescaIntervalo = ValidarIntervalo(this.EnergiaPescaIntervalo, 3.5f, 12.0f, minimo: 12.0f * 0.1f);
+            this.CooldownEnergiaSegundos = ValidarIntervalo(this.CooldownEnergiaSegundos, 3.0f, 5.0f, minimo: 3.0f);
         }
     }
 }

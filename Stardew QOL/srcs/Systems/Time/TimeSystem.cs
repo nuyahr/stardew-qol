@@ -10,7 +10,11 @@ namespace StardewQOL
         private const float SegundosPorDezMinutosCiclo24h = 720.0f;
         private const double DuracaoCiclo24hSegundos = 24.0 * 60.0 * 60.0;
         private const int MinutosDeJogoPorDia = 20 * 60;
+        // Evita que a compensação torne o relógio excessivamente lento: no máximo 2x
+        // o intervalo-base do ciclo (24h passa a ser uma meta com limite de segurança).
+        private const double LimiteMaximoSegundosPorDezMinutos24h = 1440.0;
         private bool usandoVelocidadeSentado;
+        private bool aceleracaoAssentosExternosBloqueadaAteProximoDia;
         private DateTime? inicioCiclo24hUtc;
 
         /// <summary>
@@ -46,7 +50,7 @@ namespace StardewQOL
                 return SegundosPorDezMinutosCiclo24h;
 
             double segundosPorIntervalo = segundosReaisRestantes / intervalosRestantes;
-            return (float)Math.Clamp(segundosPorIntervalo, 0.1, 86400.0);
+            return (float)Math.Clamp(segundosPorIntervalo, 0.1, LimiteMaximoSegundosPorDezMinutos24h);
         }
 
         /// <summary>Converte o formato de horário do jogo (HHMM) em minutos.</summary>
@@ -55,6 +59,29 @@ namespace StardewQOL
             int horas = horario / 100;
             int minutos = horario % 100;
             return (horas * 60) + minutos;
+        }
+
+
+        /// <summary>
+        /// Detecta exclusivamente o banco específico da praia confirmado pelo diagnóstico do SMAPI.
+        /// O retângulo corresponde ao SeatBounds (41,34,3,1) no mapa Beach.
+        /// </summary>
+        private bool JogadorSentadoNoBancoPermitidoDaPraia()
+        {
+            Farmer jogador = Game1.player;
+            var local = jogador.currentLocation;
+            if (local is null || local.NameOrUniqueName != "Beach" || !jogador.IsSitting())
+                return false;
+
+            var assento = jogador.sittingFurniture;
+            if (assento is null)
+                return false;
+
+            Microsoft.Xna.Framework.Rectangle limitesAssento = assento.GetSeatBounds();
+            return limitesAssento.X == 41
+                && limitesAssento.Y == 34
+                && limitesAssento.Width == 3
+                && limitesAssento.Height == 1;
         }
 
         /// <summary>
@@ -79,6 +106,71 @@ namespace StardewQOL
                 && limitesAssento.Right <= direita
                 && limitesAssento.Y >= topo
                 && limitesAssento.Bottom <= baseMapa;
+        }
+
+        /// <summary>
+        /// Detecta exclusivamente os quatro assentos marcados pelo usuário no Saloon.
+        /// As posições vêm do diagnóstico do SMAPI feito no save do usuário.
+        /// </summary>
+        private bool JogadorSentadoEmAssentoPermitidoDoSaloon()
+        {
+            Farmer jogador = Game1.player;
+            var local = jogador.currentLocation;
+            if (local is null || local.NameOrUniqueName != "Saloon" || !jogador.IsSitting())
+                return false;
+
+            var assento = jogador.sittingFurniture;
+            if (assento is null)
+                return false;
+
+            // Coordenadas MapSeat confirmadas pelo diagnóstico do SMAPI:
+            // (13,20,1,1), (20,18,1,1), sofá azul (42,17,1,1) e sofá vermelho (50,18,1,2).
+            Microsoft.Xna.Framework.Rectangle limitesAssento = assento.GetSeatBounds();
+            return (limitesAssento.X == 13 && limitesAssento.Y == 20 && limitesAssento.Width == 1 && limitesAssento.Height == 1)
+                || (limitesAssento.X == 20 && limitesAssento.Y == 18 && limitesAssento.Width == 1 && limitesAssento.Height == 1)
+                || (limitesAssento.X == 42 && limitesAssento.Y == 17 && limitesAssento.Width == 1 && limitesAssento.Height == 1)
+                || (limitesAssento.X == 43 && limitesAssento.Y == 18 && limitesAssento.Width == 1 && limitesAssento.Height == 2)
+                || (limitesAssento.X == 50 && limitesAssento.Y == 18 && limitesAssento.Width == 1 && limitesAssento.Height == 2);
+        }
+
+        /// <summary>
+        /// Detecta exclusivamente os três bancos marcados pelo usuário ao redor do chafariz,
+        /// na área gramada ao lado do Centro Comunitário em Pelican Town.
+        /// </summary>
+        private bool JogadorSentadoEmBancoPermitidoDaCidade()
+        {
+            Farmer jogador = Game1.player;
+            var local = jogador.currentLocation;
+            if (local is null || local.NameOrUniqueName != "Town" || !jogador.IsSitting())
+                return false;
+
+            var assento = jogador.sittingFurniture;
+            if (assento is null)
+                return false;
+
+            // MapSeat.GetSeatBounds() já retorna coordenadas em tiles, não pixels.
+            // Posições registradas no SMAPI ao sentar nos três bancos escolhidos:
+            // esquerdo: (20,26,1,2); horizontal: (25,21), (26,21), (27,21);
+            // direito: (33,26,1,2).
+            Microsoft.Xna.Framework.Rectangle limitesAssento = assento.GetSeatBounds();
+
+            bool bancoEsquerdo = limitesAssento.X == 20
+                && limitesAssento.Y == 26
+                && limitesAssento.Width == 1
+                && limitesAssento.Height == 2;
+
+            bool bancoHorizontal = limitesAssento.Y == 21
+                && limitesAssento.X >= 25
+                && limitesAssento.X <= 27
+                && limitesAssento.Width == 1
+                && limitesAssento.Height == 1;
+
+            bool bancoDireito = limitesAssento.X == 33
+                && limitesAssento.Y == 26
+                && limitesAssento.Width == 1
+                && limitesAssento.Height == 2;
+
+            return bancoEsquerdo || bancoHorizontal || bancoDireito;
         }
     }
 }
