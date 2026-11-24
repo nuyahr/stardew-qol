@@ -22,7 +22,7 @@ namespace StardewQOL
         private void ValidarTempo()
         {
             this.SegundosPorDezMinutos = ValidarVelocidade(this.SegundosPorDezMinutos, 7.0f, 7.0f, 720.0f);
-            this.SegundosPorDezMinutosSentado = ValidarVelocidade(this.SegundosPorDezMinutosSentado, 2.0f, 1.0f, 6.0f);
+            this.SegundosPorDezMinutosSentado = ValidarVelocidade(this.SegundosPorDezMinutosSentado, 2.0f, 1.0f, 3.5f);
         }
     }
 }

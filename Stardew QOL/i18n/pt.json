@@ -23,7 +23,7 @@
   "config.seated-time.enabled.name": "Ativar",
   "config.seated-time.enabled.tooltip": "Ativa ou desativa a aceleração de relógio nos locais especiais. As opções abaixo permitem controlar cada local individualmente.",
   "config.seated-time.speed.name": "Segundos por 10 min",
-  "config.seated-time.speed.tooltip": "Tempo real necessário para avançar 10 minutos enquanto sentado em um dos locais permitidos: Chafariz, Saloon, Biblioteca ou Praia. Valores menores aceleram mais o relógio. Intervalo: 1 a 6 segundos.",
+  "config.seated-time.speed.tooltip": "Tempo real necessário para avançar 10 minutos enquanto sentado em um dos locais permitidos: Chafariz, Saloon, Biblioteca ou Praia. Valores menores aceleram mais o relógio. Intervalo: 1 a 3,5 segundos.",
   "config.24h.cycle.name": "Ciclo de 24h reais",
   "config.24h.cycle.tooltip": "Faz um dia completo do jogo buscar durar 24 horas reais. Esta opção prevalece sobre a velocidade do Tempo Personalizado. A função de tempo sentado continua podendo acelerar o relógio.",
   "config.24h.balance.name": "Balancear 24h",

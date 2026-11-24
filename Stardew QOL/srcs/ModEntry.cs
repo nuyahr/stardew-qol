@@ -230,7 +230,7 @@ namespace StardewQOL
                 tooltip: () => this.Helper.Translation.Get("config.seated-time.speed.tooltip"),
                 getValue: () => this.Config.SegundosPorDezMinutosSentado,
                 setValue: value => { this.Config.SegundosPorDezMinutosSentado = value; this.Config.Validar(); },
-                min: 1.0f, max: 6.0f, interval: 0.5f,
+                min: 1.0f, max: 3.5f, interval: 0.5f,
                 formatValue: value => $"{value:0.0} s",
                 fieldId: "segundos-por-dez-minutos-sentado");
 

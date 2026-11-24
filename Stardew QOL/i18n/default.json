@@ -23,7 +23,7 @@
   "config.seated-time.enabled.name": "Enable",
   "config.seated-time.enabled.tooltip": "Enables or disables clock acceleration at special seating locations. Use the options below to control each location individually.",
   "config.seated-time.speed.name": "Seconds per 10 min",
-  "config.seated-time.speed.tooltip": "Real-world time needed for 10 in-game minutes while seated at an enabled location: Fountain, Saloon, Library, or Beach. Lower values make the clock faster. Range: 1 to 6 seconds.",
+  "config.seated-time.speed.tooltip": "Real-world time needed for 10 in-game minutes while seated at an enabled location: Fountain, Saloon, Library, or Beach. Lower values make the clock faster. Range: 1 to 3.5 seconds.",
   "config.24h.cycle.name": "24-hour real-time cycle",
   "config.24h.cycle.tooltip": "Makes one complete in-game day target 24 real-world hours. This takes priority over the Custom Time speed. The seated-time feature can still accelerate the clock.",
   "config.24h.balance.name": "Balance 24h",
