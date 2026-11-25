@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://staticdelivery.nexusmods.com/mods/1303/images/55821/55821-1795499204-1447893401.png" alt="Stardew QOL Thumbnail" width="600" />
+<img src="https://staticdelivery.nexusmods.com/mods/1303/images/55821/55821-1795629853-286827511.png" alt="Stardew QOL Thumbnail" width="600" />
 
 # Stardew QOL
 
