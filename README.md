@@ -42,11 +42,14 @@
 ### Automatic Energy Recovery
 - **Activity-Based Modes:** Configure distinct regeneration amounts and real-world second intervals for *General Recovery*, *While Walking*, *While Standing Still*, *While Seated*, *While Mounted on Horse*, and *While Holding a Fishing Rod*. Only one mode runs at a time to prevent stacking.
 - **Real-Time Intervals:** Recovery intervals run on real-world seconds rather than in-game clock speed, so regeneration timing stays consistent regardless of how fast or slow the day passes.
-- **Action & Spa Cooldowns:** Automatically pauses energy regeneration for 2.0s to 5.0s after performing stamina-consuming actions, and intelligently pauses while inside the Spa pool to avoid stacking with vanilla healing.
+- **Energy Recovery Cooldown:** Automatically pauses Energy regeneration for a configurable 3.0s to 5.0s after actions that consume Energy.
+- **Running Energy Drain:** Running consumes 1 to 2 Energy points at configurable real-time intervals of 2.0s to 4.0s. Walking, even while holding Shift, does not consume Energy, and running cannot reduce Energy below 5 points. Energy regeneration resumes 2 seconds after stopping.
+- **Scythe Cooldown:** Adds a cooldown when using the Scythe.
+- **Spa Recovery:** Energy regeneration is paused while inside the Spa pool to avoid stacking with vanilla healing.
 
 ### Automatic Health Recovery
 - **Activity-Based Modes:** Independent regeneration amounts and real-world second intervals for *General Recovery*, *While Walking*, *While Standing Still*, *While Seated*, and *While Mounted on Horse*. Fractional healing values smoothly accumulate until a full health point is restored.
-- **Shared Damage Cooldown:** Taking damage temporarily pauses both Health and Energy regeneration (configurable from 2.0s to 5.0s, in 1.0s steps).
+- **Shared Damage Cooldown:** Taking damage temporarily pauses both Health and Energy regeneration (configurable from 2.0s to 4.0s, in 1.0s steps).
 
 ### Dynamic Climate Module
 - **Additional Weather Rolls:** Adds configurable bonus chances (1% up to 75% for Rain and Snow; 1% up to 35% for Storms) on eligible sunny days without replacing or reducing the game's natural weather.
