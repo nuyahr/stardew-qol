@@ -5,8 +5,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
-    <Version>2.3.6</Version>
+    <Version>2.3.7</Version>
     <GamePath>C:\Users\Nuya\Documents\Stardew Valley</GamePath>
+    <EnableHarmony>true</EnableHarmony>
   </PropertyGroup>
 
   <ItemGroup>
