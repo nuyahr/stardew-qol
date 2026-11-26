@@ -27,6 +27,7 @@
 
 - **Choose Your Own Pace:** Fine-tune day length, play in 24-hour real time, or pass time in designated resting spots to enjoy the game at your preferred rhythm.
 - **Smart & Balanced Recovery:** Restores Energy and Health based on your activity (standing, walking, sitting, or riding your horse) with real-world time intervals and action cooldowns to keep things fair.
+- **Global Tool & Weapon Cooldown:** Tools, weapons, and Slingshots share a cooldown system that pauses Stamina regeneration without consuming Energy.
 - **Dynamic Climate Control:** Enjoy optional, calendar-balanced weather rolls without replacing standard game events.
 - **Fully Modular:** Enable only the features you want using GMCM in-game or via `config.json`.
 
@@ -44,7 +45,8 @@
 - **Real-Time Intervals:** Recovery intervals run on real-world seconds rather than in-game clock speed, so regeneration timing stays consistent regardless of how fast or slow the day passes.
 - **Energy Recovery Cooldown:** Automatically pauses Energy regeneration for a configurable 3.0s to 5.0s after actions that consume Energy.
 - **Running Energy Drain:** Running consumes 1 to 2 Energy points at configurable real-time intervals of 2.0s to 4.0s. Walking, even while holding Shift, does not consume Energy, and running cannot reduce Energy below 5 points. Energy regeneration resumes 2 seconds after stopping.
-- **Scythe Cooldown:** Adds a cooldown when using the Scythe.
+- **Global Tool & Weapon Cooldown:** All tools and weapons now share a global cooldown system, including the Scythe. The Scythe no longer has a separate cooldown. Using tools or weapons does not consume Energy; instead, it temporarily pauses Stamina regeneration.
+- **Slingshot Cooldown:** Added cooldowns for all Slingshots in the game.
 - **Spa Recovery:** Energy regeneration is paused while inside the Spa pool to avoid stacking with vanilla healing.
 
 ### Automatic Health Recovery
