@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using StardewModdingAPI;
+using StardewModdingAPI.Events;
 using Microsoft.Xna.Framework;
 using StardewValley;
 using StardewValley.Menus;
@@ -16,7 +18,33 @@ namespace StardewQOL
         private Vector2 ultimaPosicaoJogador;
         private bool estadoEnergiaInicializado;
         private DateTime? inicioPausaEnergiaUtc;
+        private DateTime? fimAtrasoRegeneracaoCorridaUtc;
+        private double acumuladoEnergiaCorrida;
+        private float energiaGastaPelaCorridaDesdeUltimaAtualizacao;
+        private bool estavaCorrendo;
         private readonly Dictionary<string, double> acumuladoresRecuperacaoEnergia = new();
+
+        /// <summary>
+        /// A foice não consome energia no jogo base, então a queda de stamina não detecta
+        /// seu uso. Este evento aplica o mesmo cooldown configurado para as outras ferramentas.
+        /// </summary>
+        private void OnButtonPressed(object? sender, ButtonPressedEventArgs e)
+        {
+            if (!Context.IsWorldReady
+                || !this.Config.ModAtivado
+                || !this.Config.EnergiaModuloAtivado
+                || !this.Config.CooldownEnergiaAtivado
+                || !e.Button.IsUseToolButton()
+                || Game1.activeClickableMenu is not null
+                || Game1.dialogueUp
+                || Game1.eventUp)
+            {
+                return;
+            }
+
+            if (Game1.player.CurrentTool is MeleeWeapon foice && foice.isScythe())
+                this.fimCooldownEnergiaUtc = DateTime.UtcNow.AddSeconds(this.Config.CooldownEnergiaSegundos);
+        }
 
         /// <summary>
         /// Escolhe o modo de recuperação aplicável e atualiza a energia do jogador.
@@ -38,6 +66,10 @@ namespace StardewQOL
                 this.acumuladoresRecuperacaoEnergia.Clear();
                 this.fimCooldownEnergiaUtc = null;
                 this.inicioPausaEnergiaUtc = null;
+                this.fimAtrasoRegeneracaoCorridaUtc = null;
+                this.acumuladoEnergiaCorrida = 0.0;
+                this.energiaGastaPelaCorridaDesdeUltimaAtualizacao = 0.0f;
+                this.estavaCorrendo = false;
                 return;
             }
 
@@ -73,6 +105,8 @@ namespace StardewQOL
                 TimeSpan duracaoPausa = agora - this.inicioPausaEnergiaUtc.Value;
                 if (this.fimCooldownEnergiaUtc.HasValue)
                     this.fimCooldownEnergiaUtc = this.fimCooldownEnergiaUtc.Value.Add(duracaoPausa);
+                if (this.fimAtrasoRegeneracaoCorridaUtc.HasValue)
+                    this.fimAtrasoRegeneracaoCorridaUtc = this.fimAtrasoRegeneracaoCorridaUtc.Value.Add(duracaoPausa);
 
                 this.inicioPausaEnergiaUtc = null;
                 this.ultimaStamina = jogador.Stamina;
@@ -90,7 +124,8 @@ namespace StardewQOL
                 this.fimCooldownEnergiaUtc = null;
 
             bool segurandoVara = jogador.CurrentTool is FishingRod;
-            float energiaGasta = this.ultimaStamina - jogador.Stamina;
+            float energiaGasta = this.ultimaStamina - jogador.Stamina - this.energiaGastaPelaCorridaDesdeUltimaAtualizacao;
+            this.energiaGastaPelaCorridaDesdeUltimaAtualizacao = 0.0f;
             if (energiaGasta > 0.01f && this.Config.CooldownEnergiaAtivado)
                 this.fimCooldownEnergiaUtc = agora.AddSeconds(this.Config.CooldownEnergiaSegundos);
 
@@ -98,6 +133,45 @@ namespace StardewQOL
             float dy = jogador.Position.Y - this.ultimaPosicaoJogador.Y;
             bool andando = (dx * dx) + (dy * dy) > 0.01f;
             this.ultimaPosicaoJogador = jogador.Position;
+
+            // O próprio jogo diferencia corrida de caminhada pelo estado running.
+            // Exige movimento real e exclui montaria para não cobrar energia a cavalo.
+            bool correndo = this.Config.CustoEnergiaCorridaAtivado
+                && jogador.running
+                && jogador.movedDuringLastTick()
+                && !jogador.isRidingHorse();
+
+            if (correndo)
+            {
+                this.acumuladoEnergiaCorrida += decorrido;
+                double intervaloCorrida = Math.Max(0.1, this.Config.EnergiaCorridaIntervalo);
+                int cobrancas = (int)(this.acumuladoEnergiaCorrida / intervaloCorrida);
+                if (cobrancas > 0)
+                {
+                    this.acumuladoEnergiaCorrida -= cobrancas * intervaloCorrida;
+                    float energiaMinima = this.Config.EnergiaCorridaMinima;
+                    if (jogador.Stamina > energiaMinima)
+                    {
+                        float staminaAntesDaCorrida = jogador.Stamina;
+                        jogador.Stamina = Math.Max(energiaMinima,
+                            jogador.Stamina - (this.Config.EnergiaCorridaQuantidade * cobrancas));
+                        this.energiaGastaPelaCorridaDesdeUltimaAtualizacao += staminaAntesDaCorrida - jogador.Stamina;
+                    }
+                }
+                this.fimAtrasoRegeneracaoCorridaUtc = null;
+            }
+            else
+            {
+                this.acumuladoEnergiaCorrida = 0.0;
+                if (this.estavaCorrendo)
+                    this.fimAtrasoRegeneracaoCorridaUtc = agora.AddSeconds(this.Config.EnergiaCorridaAtrasoRegeneracao);
+            }
+            this.estavaCorrendo = correndo;
+
+            bool emAtrasoAposCorrida = this.fimAtrasoRegeneracaoCorridaUtc.HasValue
+                && agora < this.fimAtrasoRegeneracaoCorridaUtc.Value;
+            if (this.fimAtrasoRegeneracaoCorridaUtc.HasValue && !emAtrasoAposCorrida)
+                this.fimAtrasoRegeneracaoCorridaUtc = null;
 
             bool emCooldownEnergia = this.Config.CooldownEnergiaAtivado
                 && this.fimCooldownEnergiaUtc.HasValue
@@ -115,7 +189,7 @@ namespace StardewQOL
             float quantidade = 0.0f;
             float intervalo = 1.0f;
 
-            if (!emCooldown && !emMinigamePesca)
+            if (!emCooldown && !emMinigamePesca && !correndo && !emAtrasoAposCorrida)
             {
                 if (this.Config.RecuperacaoSentadoAtivada && this.JogadorSentadoPertoDeMesa())
                 {
@@ -193,6 +267,10 @@ namespace StardewQOL
             this.fimCooldownEnergiaUtc = null;
             this.estadoEnergiaInicializado = false;
             this.inicioPausaEnergiaUtc = null;
+            this.fimAtrasoRegeneracaoCorridaUtc = null;
+            this.acumuladoEnergiaCorrida = 0.0;
+            this.energiaGastaPelaCorridaDesdeUltimaAtualizacao = 0.0f;
+            this.estavaCorrendo = false;
             this.acumuladoresRecuperacaoEnergia.Clear();
             this.ultimaStamina = 0;
             this.ultimaPosicaoJogador = Vector2.Zero;

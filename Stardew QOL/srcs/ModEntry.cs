@@ -39,6 +39,7 @@ namespace StardewQOL
             helper.Events.GameLoop.UpdateTicked += this.OnUpdateTicked;
             helper.Events.GameLoop.DayStarted += this.OnDayStarted;
             helper.Events.GameLoop.ReturnedToTitle += this.OnReturnedToTitle;
+            helper.Events.Input.ButtonPressed += this.OnButtonPressed;
         }
 
         /// <summary>
@@ -275,6 +276,7 @@ namespace StardewQOL
             configMenu.AddPageLink(this.ModManifest, "energy-idle", () => "> " + this.Helper.Translation.Get("config.energy.idle.name"));
             configMenu.AddPageLink(this.ModManifest, "energy-seated", () => "> " + this.Helper.Translation.Get("config.energy.seated.name"));
             configMenu.AddPageLink(this.ModManifest, "energy-fishing", () => "> " + this.Helper.Translation.Get("config.energy.fishing.name"));
+            configMenu.AddPageLink(this.ModManifest, "energy-running", () => "> " + this.Helper.Translation.Get("config.energy.running.name"));
             configMenu.AddPageLink(this.ModManifest, "energy-cooldown", () => "> " + this.Helper.Translation.Get("config.energy.cooldown.name"));
 
             configMenu.AddPage(this.ModManifest, "energy-module",
@@ -302,6 +304,13 @@ namespace StardewQOL
             configMenu.AddParagraph(this.ModManifest, () => this.Helper.Translation.Get("config.energy.cooldown.description"));
             configMenu.AddBoolOption(this.ModManifest, () => this.Config.CooldownEnergiaAtivado, v => this.Config.CooldownEnergiaAtivado = v, () => this.Helper.Translation.Get("config.energy.cooldown.enabled.name"), () => this.Helper.Translation.Get("config.energy.cooldown.enabled.tooltip"), "energia-cooldown-ativado");
             configMenu.AddNumberOption(this.ModManifest, () => this.Config.CooldownEnergiaSegundos, v => { this.Config.CooldownEnergiaSegundos = v; this.Config.Validar(); }, () => this.Helper.Translation.Get("config.energy.cooldown.seconds.name"), () => this.Helper.Translation.Get("config.energy.cooldown.seconds.tooltip"), 3.0f, 5.0f, 1.0f, v => $"{v:0.0} s", "energia-cooldown-segundos");
+
+            configMenu.AddPage(this.ModManifest, "energy-running", () => this.Helper.Translation.Get("config.energy.running.name"));
+            configMenu.AddPageLink(this.ModManifest, "energy", () => "@ " + this.Helper.Translation.Get("config.page.back-to-energy.name"));
+            configMenu.AddParagraph(this.ModManifest, () => this.Helper.Translation.Get("config.energy.running.description"));
+            configMenu.AddBoolOption(this.ModManifest, () => this.Config.CustoEnergiaCorridaAtivado, v => this.Config.CustoEnergiaCorridaAtivado = v, () => this.Helper.Translation.Get("config.energy.running.enabled.name"), () => this.Helper.Translation.Get("config.energy.running.enabled.tooltip"), "energia-corrida-ativado");
+            configMenu.AddNumberOption(this.ModManifest, () => this.Config.EnergiaCorridaQuantidade, v => { this.Config.EnergiaCorridaQuantidade = v; this.Config.Validar(); }, () => this.Helper.Translation.Get("config.energy.running.amount.name"), () => this.Helper.Translation.Get("config.energy.running.amount.tooltip"), 1.0f, 2.0f, 1.0f, v => $"{v:0.0}", "energia-corrida-quantidade");
+            configMenu.AddNumberOption(this.ModManifest, () => this.Config.EnergiaCorridaIntervalo, v => { this.Config.EnergiaCorridaIntervalo = v; this.Config.Validar(); }, () => this.Helper.Translation.Get("config.energy.running.interval.name"), () => this.Helper.Translation.Get("config.energy.running.interval.tooltip"), 2.0f, 4.0f, 1.0f, v => $"{v:0.0} s", "energia-corrida-intervalo");
 
             // Módulo Saúde: estrutura paralela à Energia, com cooldown de dano compartilhado.
             configMenu.AddPage(this.ModManifest, "health",
