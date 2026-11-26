@@ -1,7 +1,7 @@
 {
   "Name": "Stardew QOL",
   "Author": "Nuya",
-  "Version": "2.3.6",
+  "Version": "2.3.7",
   "Description": "Quality-of-life improvements for Stardew Valley.",
   "UniqueID": "Nuya.StardewQOL",
   "EntryDll": "StardewQOL.dll",

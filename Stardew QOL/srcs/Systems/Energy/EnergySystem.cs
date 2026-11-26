@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using StardewModdingAPI;
-using StardewModdingAPI.Events;
 using Microsoft.Xna.Framework;
 using StardewValley;
 using StardewValley.Menus;
@@ -25,16 +24,16 @@ namespace StardewQOL
         private readonly Dictionary<string, double> acumuladoresRecuperacaoEnergia = new();
 
         /// <summary>
-        /// A foice não consome energia no jogo base, então a queda de stamina não detecta
-        /// seu uso. Este evento aplica o mesmo cooldown configurado para as outras ferramentas.
+        /// Inicia o cooldown único de energia quando o jogo confirma o início de um ataque
+        /// corpo a corpo ou o disparo efetivo de um estilingue.
         /// </summary>
-        private void OnButtonPressed(object? sender, ButtonPressedEventArgs e)
+        private void RegistrarCooldownUsoDeArma(Farmer jogador)
         {
             if (!Context.IsWorldReady
                 || !this.Config.ModAtivado
                 || !this.Config.EnergiaModuloAtivado
                 || !this.Config.CooldownEnergiaAtivado
-                || !e.Button.IsUseToolButton()
+                || jogador != Game1.player
                 || Game1.activeClickableMenu is not null
                 || Game1.dialogueUp
                 || Game1.eventUp)
@@ -42,8 +41,36 @@ namespace StardewQOL
                 return;
             }
 
-            if (Game1.player.CurrentTool is MeleeWeapon foice && foice.isScythe())
-                this.fimCooldownEnergiaUtc = DateTime.UtcNow.AddSeconds(this.Config.CooldownEnergiaSegundos);
+            this.fimCooldownEnergiaUtc = DateTime.UtcNow.AddSeconds(this.Config.CooldownEnergiaSegundos);
+        }
+
+        /// <summary>
+        /// Prefixo Harmony chamado quando o jogo inicia uma animação real de ataque corpo a corpo.
+        /// Inclui espadas, adagas, clavas e foices.
+        /// </summary>
+        private static void AoIniciarAtaqueCorpoACorpo(MeleeWeapon __instance, Farmer who)
+        {
+            ModEntry? mod = instanciaAtiva;
+            if (mod is not null && who.CurrentTool == __instance)
+                mod.RegistrarCooldownUsoDeArma(who);
+        }
+
+        /// <summary>
+        /// Prefixo Harmony guarda a quantidade de projéteis antes da tentativa de disparo.
+        /// </summary>
+        private static void AntesDeDispararEstilingue(GameLocation location, out int __state)
+        {
+            __state = location.projectiles.Count;
+        }
+
+        /// <summary>
+        /// Só inicia o cooldown se o disparo realmente adicionou um projétil ao mundo.
+        /// Puxar, mirar ou soltar sem munição não ativa o cooldown.
+        /// </summary>
+        private static void DepoisDeDispararEstilingue(GameLocation location, Farmer who, int __state)
+        {
+            if (location.projectiles.Count > __state)
+                instanciaAtiva?.RegistrarCooldownUsoDeArma(who);
         }
 
         /// <summary>
@@ -139,6 +166,7 @@ namespace StardewQOL
             bool correndo = this.Config.CustoEnergiaCorridaAtivado
                 && jogador.running
                 && jogador.movedDuringLastTick()
+                && !jogador.UsingTool
                 && !jogador.isRidingHorse();
 
             if (correndo)

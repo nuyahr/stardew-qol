@@ -1,4 +1,5 @@
 using System;
+using HarmonyLib;
 using System.Collections.Generic;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
@@ -20,6 +21,7 @@ namespace StardewQOL
 
         // Configuração persistida em config.json e compartilhada pelos dois módulos.
         private ModConfig Config = new();
+        private static ModEntry? instanciaAtiva;
         private ClimateSystem? climateSystem;
 
 
@@ -35,11 +37,32 @@ namespace StardewQOL
             this.climateSystem = new ClimateSystem(this.Monitor, this.Config.Clima);
             helper.WriteConfig(this.Config);
 
+            // Detecta ataques no ponto em que o jogo realmente os inicia, em vez de
+            // reagir apenas ao pressionamento do botão de uso da ferramenta.
+            instanciaAtiva = this;
+            var harmony = new Harmony(this.ModManifest.UniqueID + ".WeaponCooldown");
+            var meleeAttack = AccessTools.Method(typeof(MeleeWeapon), "setFarmerAnimating", new[] { typeof(Farmer) });
+            var slingshotFire = AccessTools.Method(typeof(Slingshot), "PerformFire", new[] { typeof(GameLocation), typeof(Farmer) });
+
+            if (meleeAttack is not null)
+                harmony.Patch(meleeAttack, prefix: new HarmonyMethod(typeof(ModEntry), "AoIniciarAtaqueCorpoACorpo"));
+            else
+                this.Monitor.Log("Não foi possível localizar o método de ataque corpo a corpo; o cooldown das armas corpo a corpo não será acionado.", LogLevel.Warn);
+
+            if (slingshotFire is not null)
+            {
+                harmony.Patch(
+                    slingshotFire,
+                    prefix: new HarmonyMethod(typeof(ModEntry), "AntesDeDispararEstilingue"),
+                    postfix: new HarmonyMethod(typeof(ModEntry), "DepoisDeDispararEstilingue"));
+            }
+            else
+                this.Monitor.Log("Não foi possível localizar o método de disparo do estilingue; o cooldown do estilingue não será acionado.", LogLevel.Warn);
+
             helper.Events.GameLoop.GameLaunched += this.OnGameLaunched;
             helper.Events.GameLoop.UpdateTicked += this.OnUpdateTicked;
             helper.Events.GameLoop.DayStarted += this.OnDayStarted;
             helper.Events.GameLoop.ReturnedToTitle += this.OnReturnedToTitle;
-            helper.Events.Input.ButtonPressed += this.OnButtonPressed;
         }
 
         /// <summary>
